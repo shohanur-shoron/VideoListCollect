@@ -331,9 +331,13 @@ def create_short_video_list(request):
 
 def view_table(request):
     data = YouTubeVideo.objects.all()
+    length = 0
+    for video in data:
+        length += video.duration_seconds
     context = {
         'data':data,
-        'empty':True if len(data) == 0 else False
+        'empty':True if len(data) == 0 else False,
+        'total_length': format_duration(length)
     }
     return render(request, "view.html", context)
         

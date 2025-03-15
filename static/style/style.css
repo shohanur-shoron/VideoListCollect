@@ -352,3 +352,8 @@ body{
 .videoLinks a:focus {
     outline: 2px solid #ff4081; /* Focus outline for accessibility */
 }
+
+.totalLengthTable{
+    font-family: "Roboto Mono", serif;
+    color: #d3d3d3;
+}
