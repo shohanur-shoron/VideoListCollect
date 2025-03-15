@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if empty %}
+        <div class="noFile">
+            <h1>No link added</h1>
+        </div>
+    {% else %}
+        <div class="tableDiv">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Video ID</th>
+                        <th>Title</th>
+                        <th>Channel Name</th>
+                        <th>Duration</th>
+                        <th>Added By</th>
+                        <th>Type</th>
+                        <th>Date Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ obj.video_id }}</td>
+                        <td>{{ obj.title }}</td>
+                        <td>{{ obj.channel_name }}</td>
+                        <td class="duration">{{ obj.duration }}</td>
+                        <td>{% if obj.added_by %}{{obj.added_by.username}}{% else %}None{% endif %}</td>
+                        <td>{{ obj.type }}</td>
+                        <td>{{ obj.created_at|date:"d/m/Y, g:i A" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="addLink">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" id="link" name="link" placeholder="Add video link here" required autocomplete="off">
+        <input type="submit" value="Add" id="submitBtn">
+    </form>
+
+    <div class="loading-area" id="loading-area">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    
+    {% if messages %}
+        <div class="message">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+
+<script>
+    const loading = document.getElementById('loading-area');
+    const submitBtn = document.getElementById('submitBtn');
+    const text = document.getElementById('link')
+
+    submitBtn.addEventListener("click", function(e){
+        let getText = text.value 
+        if(getText != ''){
+            loading.style.display = 'grid';
+        }
+    });
+
+</script>
+
+{% endblock content %}

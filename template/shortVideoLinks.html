@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if empty %}
+<div class="noFile">
+    <h1>No link added</h1>
+</div>
+{% else %}
+
+<div class="linkBox">
+    {% for channel, data in grouped_videos.items %}
+        <div class="allLinks">
+            <div class="dateandcopy">
+                <h2>{{ channel }} ({{ data.total_duration_human }})</h2>
+                <p class="copy">copy</p>
+            </div>
+            <div class="videoLinks">
+                {% for video in data.videos %}
+                    <p>{{ forloop.counter }}. <a href="{{ video.url }}" target="_blank">{{ video.url }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Select all elements with the class 'copy'
+        const copyButtons = document.querySelectorAll('.copy');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Find the parent '.allLinks' div
+                const allLinksDiv = button.closest('.allLinks');
+                if (!allLinksDiv) return; // Safety check
+                
+                // Find the '.videoLinks' div within the same '.allLinks'
+                const videoLinksDiv = allLinksDiv.querySelector('.videoLinks');
+                if (!videoLinksDiv) return; // Safety check
+                
+                // Extract text from all <p> tags inside '.videoLinks'
+                const videoLinks = Array.from(videoLinksDiv.querySelectorAll('p'))
+                    .map(p => p.textContent.trim())
+                    .join('\n');
+                
+                // Use the Clipboard API to copy the text
+                navigator.clipboard.writeText(videoLinks)
+                    .then(() => {
+                        // Provide feedback by changing the text to 'Copied'
+                        const originalText = button.textContent;
+                        button.textContent = 'Copied';
+                        
+                        // Revert back to original text after 2 seconds
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                        }, 10000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+            });
+        });
+    });
+</script>
+
+{% endif %}
+
+{% endblock content %}
