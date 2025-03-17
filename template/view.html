@@ -27,7 +27,8 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ obj.video_id }}</td>
-                        <td>{{ obj.title }}</td>
+                        <!--<td>{{ obj.title }}</td>-->
+                        <td><a href="{{obj.url}}" target="_blank" style="color: azure; text-decoration: none;">{{ obj.title }}</a></td>
                         <td>{{ obj.channel_name }}</td>
                         <td class="duration">{{ obj.duration }}</td>
                         <td>{% if obj.added_by %}{{obj.added_by.username}}{% else %}None{% endif %}</td>
